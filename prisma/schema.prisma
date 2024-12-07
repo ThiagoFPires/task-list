@@ -19,6 +19,7 @@ model Tarefa {
   titulo       String
   descricao    String
   status       Status      @default(pendente) // Mudamos para o enum Status
+  prioridade   Prioridade  @default(baixa)
   criadoEm     DateTime    @default(now())
   atualizadoEm DateTime    @updatedAt
   usuarioId    Int
@@ -39,4 +40,10 @@ enum Status {
   pendente
   em_progresso
   concluida
+}
+
+enum Prioridade {
+  baixa
+  media
+  alta
 }

@@ -3,6 +3,7 @@ const prisma = new PrismaClient();
 const { getPagination } = require('../utils/pagination');
 
 class TaskController {
+  // Buscar todas as tarefas
   async getAll(req, res) {
     const { page = 1, pageSize = 10 } = req.query;
     const pagination = getPagination(page, pageSize);
@@ -22,6 +23,7 @@ class TaskController {
     }
   }
 
+  // Buscar tarefa por ID
   async getById(req, res) {
     const { id } = req.params;
 
@@ -44,43 +46,52 @@ class TaskController {
     }
   }
 
+  // Criar uma nova tarefa
   async create(req, res) {
-    const { titulo, descricao, usuarioId, status } = req.body;
+    const { titulo, descricao, status, usuarioId, prioridade } = req.body;
 
     try {
-      const newTask = await prisma.tarefa.create({
+      const novaTask = await prisma.tarefa.create({
         data: {
           titulo,
           descricao,
-          status,
-          usuarioId
+          status: status || 'pendente',
+          prioridade: prioridade || 'baixa',
+          usuarioId,
         },
       });
 
-      res.json(newTask);
+      res.json(novaTask);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Erro ao criar tarefa' });
     }
   }
 
+  // Atualizar tarefa
   async update(req, res) {
     const { id } = req.params;
     const { titulo, descricao, status, prioridade } = req.body;
 
     try {
-      const updatedTask = await prisma.tarefa.update({
+      const atualizarTask = await prisma.tarefa.update({
         where: { id: parseInt(id) },
-        data: { titulo, descricao, status, prioridade },
+        data: {
+          titulo,
+          descricao,
+          status,
+          prioridade,
+        },
       });
 
-      res.json(updatedTask);
+      res.json(atualizarTask);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Erro ao atualizar tarefa' });
     }
   }
 
+  // Deletar tarefa
   async delete(req, res) {
     const { id } = req.params;
 
@@ -96,29 +107,30 @@ class TaskController {
     }
   }
 
+  // Estatísticas de tarefas
   async statistics(req, res) {
     try {
       console.log('Iniciando consulta de estatísticas...');
-  
+
       const totalTasks = await prisma.tarefa.count();
       console.log('Total de tarefas:', totalTasks);
-  
+
       const pendingPriorityAvg = await prisma.tarefa.aggregate({
         where: { status: 'pendente' },
         _avg: { prioridade: true },
       });
       console.log('Média de prioridade das tarefas pendentes:', pendingPriorityAvg);
-  
+
       const recentCompletedTasks = await prisma.tarefa.count({
         where: {
-          status: 'concluída',
+          status: 'concluida',
           criadoEm: {
-            gte: new Date(new Date().setDate(new Date().getDate() - 7)),
+            gte: new Date(new Date().setDate(new Date().getDate() - 7)), // Tarefas concluídas nos últimos 7 dias
           },
         },
       });
       console.log('Tarefas concluídas nos últimos 7 dias:', recentCompletedTasks);
-  
+
       res.json({
         totalTasks,
         pendingPriorityAvg,
