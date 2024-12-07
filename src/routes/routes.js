@@ -16,7 +16,7 @@ router.put('/tasks/:id', taskController.update, authController.authenticate);
 router.delete('/tasks/:id', taskController.delete, authController.authenticate);
 
 // Estatísticas
-router.get('/tasks/statistics', taskController.statistics, authController.authenticate);
+router.get('/tasks/statistics/:id', taskController.statistics, authController.authenticate);
 
 
 module.exports = router;

@@ -27,9 +27,17 @@ class TaskController {
   async getById(req, res) {
     const { id } = req.params;
 
+    const taskId = parseInt(id);
+
+    if (isNaN(taskId)) {
+      return res.status(400).json({ error: 'ID inválido' });
+    }
+
     try {
       const task = await prisma.tarefa.findUnique({
-        where: { id: parseInt(id) },
+        where: {
+          id: taskId,
+        },
         include: {
           historicos: true,
         },
@@ -107,21 +115,53 @@ class TaskController {
     }
   }
 
-  // Estatísticas de tarefas
   async statistics(req, res) {
     try {
       console.log('Iniciando consulta de estatísticas...');
 
+      // total de tarefas
       const totalTasks = await prisma.tarefa.count();
       console.log('Total de tarefas:', totalTasks);
 
-      const pendingPriorityAvg = await prisma.tarefa.aggregate({
+      // calcula a média de prioridade das tarefas
+      const tasksPendentes = await prisma.tarefa.findMany({
         where: { status: 'pendente' },
-        _avg: { prioridade: true },
+        select: {
+          id: true,
+          prioridade: true
+        },
       });
-      console.log('Média de prioridade das tarefas pendentes:', pendingPriorityAvg);
 
-      const recentCompletedTasks = await prisma.tarefa.count({
+      // Log para verificar os valores de prioridade
+      console.log('Tarefas pendentes:', tasksPendentes);
+
+      // Mapeamento de prioridade para números
+      const prioridadeMapeamento = {
+        BAIXA: 1,
+        MEDIA: 2,
+        ALTA: 3,
+      };
+
+      // Verificando se as tarefas pendentes têm a prioridade mapeada corretamente
+      const totalPrioridade = tasksPendentes.reduce((sum, task) => {
+        // Verificando se a prioridade da tarefa é válida
+      const prioridadeValor = prioridadeMapeamento[task.prioridade?.toUpperCase()];
+
+         // Adicionando log para verificar a prioridade de cada tarefa
+        console.log(`Tarefa ID: ${task.id}, Prioridade: ${task.prioridade}, Mapeada como: ${prioridadeValor}`);
+  
+        if (prioridadeValor) {
+          return sum + prioridadeValor;
+        }
+        console.log(`Prioridade inválida para a tarefa com id: ${task.id}`);
+        return sum;
+      }, 0);
+
+      const mediaDePrioridadePendente = tasksPendentes.length > 0 ? totalPrioridade / tasksPendentes.length : 0;
+      console.log('Média de prioridade das tarefas pendentes:', mediaDePrioridadePendente);
+
+      // Tarefas concluídas nos últimos 7 dias
+      const tasksCompletasRecentes = await prisma.tarefa.count({
         where: {
           status: 'concluida',
           criadoEm: {
@@ -129,19 +169,21 @@ class TaskController {
           },
         },
       });
-      console.log('Tarefas concluídas nos últimos 7 dias:', recentCompletedTasks);
+      console.log('Tarefas concluídas nos últimos 7 dias:', tasksCompletasRecentes);
 
+      // Enviando resposta com estatísticas
       res.json({
         totalTasks,
-        pendingPriorityAvg,
-        recentCompletedTasks,
+        mediaDePrioridadePendente,
+        tasksCompletasRecentes,
       });
     } catch (error) {
       console.error('Erro ao buscar estatísticas:', error);
       res.status(500).json({ error: 'Erro ao buscar estatísticas' });
     }
   }
-  
+
+
 }
 
 module.exports = new TaskController();
