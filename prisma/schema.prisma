@@ -18,7 +18,7 @@ model Tarefa {
   id           Int         @id @default(autoincrement())
   titulo       String
   descricao    String
-  status       String      @default("pendente")
+  status       Status      @default(pendente) // Mudamos para o enum Status
   criadoEm     DateTime    @default(now())
   atualizadoEm DateTime    @updatedAt
   prioridade   Int
@@ -33,4 +33,11 @@ model Historico {
   atualizadoEm DateTime @default(now())
   tarefaId     Int
   tarefa       Tarefa   @relation(fields: [tarefaId], references: [id])
+}
+
+// Enum para os status das tarefas
+enum Status {
+  pendente
+  em_progresso
+  concluida
 }
