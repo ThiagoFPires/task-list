@@ -45,15 +45,15 @@ class TaskController {
   }
 
   async create(req, res) {
-    const { titulo, descricao, prioridade, usuarioId } = req.body;
+    const { titulo, descricao, usuarioId, status } = req.body;
 
     try {
       const newTask = await prisma.tarefa.create({
         data: {
           titulo,
           descricao,
-          prioridade,
-          usuarioId,
+          status,
+          usuarioId
         },
       });
 
@@ -98,12 +98,17 @@ class TaskController {
 
   async statistics(req, res) {
     try {
+      console.log('Iniciando consulta de estatísticas...');
+  
       const totalTasks = await prisma.tarefa.count();
+      console.log('Total de tarefas:', totalTasks);
+  
       const pendingPriorityAvg = await prisma.tarefa.aggregate({
         where: { status: 'pendente' },
         _avg: { prioridade: true },
       });
-
+      console.log('Média de prioridade das tarefas pendentes:', pendingPriorityAvg);
+  
       const recentCompletedTasks = await prisma.tarefa.count({
         where: {
           status: 'concluída',
@@ -112,17 +117,19 @@ class TaskController {
           },
         },
       });
-
+      console.log('Tarefas concluídas nos últimos 7 dias:', recentCompletedTasks);
+  
       res.json({
         totalTasks,
         pendingPriorityAvg,
         recentCompletedTasks,
       });
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao buscar estatísticas:', error);
       res.status(500).json({ error: 'Erro ao buscar estatísticas' });
     }
   }
+  
 }
 
 module.exports = new TaskController();

@@ -21,7 +21,6 @@ model Tarefa {
   status       Status      @default(pendente) // Mudamos para o enum Status
   criadoEm     DateTime    @default(now())
   atualizadoEm DateTime    @updatedAt
-  prioridade   Int
   usuarioId    Int
   usuario      Usuario     @relation(fields: [usuarioId], references: [id])
   historicos   Historico[]
