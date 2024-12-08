@@ -70,7 +70,7 @@ input[type="password"]:focus,
 }
 
 button {
-  background-color: #007bff;
+  background-color: #ff7b10;
   color: #fff;
   font-size: 15px;
   width: 120px; 
@@ -85,7 +85,7 @@ button {
 }
 
 button:hover {
-  background-color: #007bff;
+  background-color: #ff7b10;
 }
 
 button:active {
@@ -119,7 +119,7 @@ button:active {
 }
 
 .options a {
-  color: #007bff;
+  color: #f87000;
   text-decoration: none;
 }
 
@@ -198,22 +198,24 @@ button:active {
     align-items: flex-start; 
   }
 
-.editar, .delete-icon, .qr-icon {
-  cursor: pointer;
-  color: #555;
-  font-size: 16px;
-}
-
-/* Efeito de aumento e cor para o ícone */
-.editar:hover {
-  transform: scale(1.2);
-  color: #007bff;
-}
-
-.delete-icon:hover {
-  transform: scale(1.2);
-  color: #dc3545;
-}
+  .icons i {
+    cursor: pointer;
+    font-size: 20px;
+    transition: color 0.3s;
+  }
+  
+  .edit-hover {
+    color: blue;
+  }
+  
+  .delete-hover {
+    color: red;
+  }
+  
+  .icons i:hover {
+    transform: scale(1.1);
+  }
+  
 
 /* Personalizando o título do modal */
 .swal2-title {
@@ -260,7 +262,7 @@ button:active {
 }
 
 .swal2-confirm {
-  background-color: #3085d6;
+  background-color: #2f7920;
   /* Cor do botão de confirmação */
   color: white;
   /* Cor do texto do botão */
@@ -276,7 +278,7 @@ button:active {
 
 /* Alterando o hover dos botões */
 .swal2-confirm:hover {
-  background-color: #007bff;
+  background-color: #2f7920;
   /* Cor ao passar o mouse no botão confirmar */
 }
 
@@ -316,6 +318,187 @@ table{
 
 td,th{
   padding: 8px;
-  border-bottom: 1px solid #007bff;
+  border-bottom: 1px solid #ff7b10;
   }
 }
+
+
+/* Botões de ação */
+button {
+  background-color: #ff7b10;
+  color: #fff;
+  font-size: 15px;
+  width: 120px;
+  height: 48px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px auto;
+  position: relative;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ff7b10;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Estilos da lista de tarefas */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+li button {
+  margin-left: 10px;
+}
+
+li button:hover {
+  background-color: #dc3545;
+}
+
+/* Filtros de tarefa */
+.task-filters {
+  margin-bottom: 20px;
+}
+
+.task-filters select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* Formulário de adicionar tarefa */
+.add-task-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-task-form .text-box input {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.add-task-form .text-box input:focus {
+  border-color: black;
+  outline: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .task-list-container, .add-task-form {
+    padding: 20px;
+    max-width: 95%;
+  }
+
+  button {
+    padding: 10px 15px;
+  }
+
+  .task-filters select {
+    width: 100%;
+  }
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 480px) {
+  .task-list-container, .add-task-form {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .text-box input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+/* Estilo para o botão de adicionar tarefa */
+.add-button {
+  background-color: #ff7b10;
+  color: white;
+  border: none;
+  padding: 6px; /* Reduzido para um botão mais compacto */
+  font-size: 12px; /* Fonte menor */
+  cursor: pointer;
+  border-radius: 50%; /* Tornando o botão circular */
+  transition: background-color 0.3s ease;
+  position: absolute; /* Para posicionar no canto */
+  bottom: 5px; /* Distância do fundo */
+  right: 5px; /* Distância da lateral direita */
+  width: 40px; /* Largura fixada para o botão */
+  height: 40px; /* Altura fixada para o botão */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-button i { /* Ajuste do ícone */
+  font-size: 20px; /* Ajuste do tamanho do ícone */
+}
+
+.add-button:hover {
+  background-color: #ff7b10;
+}
+
+
+/* Estilo para o botão de enviar no formulário */
+.submit-button {
+  background-color: #ff7b10;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.submit-button:hover {
+  background-color: #ff7b10;
+}
+
+/* Estilo geral para o campo de busca */
+.search-input {
+  width: 80%;
+  padding: 8px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.search-icon {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+

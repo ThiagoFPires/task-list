@@ -33,6 +33,14 @@
         <button class="back-button" v-if="showBackButton" @click="goBack">
             <img src="assets/anterior.png" alt="Voltar">
         </button>
+        <div class="task-list">
+            <div v-for="task in tasks" :key="task.id" class="task-item">
+              <button class="edit-task" @click="editTask(task)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <span>{{ task.name }}</span>
+            </div>
+          </div>
     </div>
 </body>
 
