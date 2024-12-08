@@ -1,0 +1,321 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0 20px;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 60px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); 
+  text-align: center;
+  max-width: 70%; 
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  max-width: 160px;
+  height: auto;
+}
+
+.text-box {
+  display: flex; 
+  flex-direction: column; /* Organiza os itens em coluna */
+  align-items: center;
+  justify-content: center; 
+  width: 50%;
+  height: auto; 
+  margin: 0 auto; 
+  margin-top: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+.input-field {
+  /* caso tenha outra classe .input-field */
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+.input-field:focus {
+  border-color: black;
+  outline: none;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  font-size: 15px;
+  width: 120px; 
+  height: 48px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px auto; 
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+button:hover {
+  background-color: #007bff;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.forgot-password-button {
+  width: 180px;
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.back-button img {
+  width: 100%;
+  height: 100%;
+}
+
+.options {
+  margin-top: 25px; 
+  font-size: 0.9em;
+}
+
+.options a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.options a:hover {
+  text-decoration: underline;
+}
+
+/* Animações */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .logo img {
+    max-width: 70px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px;
+  }
+
+  button {
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .logo {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logo img {
+    max-width: 60px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 8px;
+  }
+
+  button {
+    padding: 10px 12px;
+    font-size: 0.9em;
+  }
+
+  .options {
+    margin-top: 20px;
+    font-size: 0.85em;
+  }
+}
+
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .list-item {
+    flex-direction: column;  /* Empilha os itens verticalmente */
+    align-items: flex-start; 
+  }
+
+.editar, .delete-icon, .qr-icon {
+  cursor: pointer;
+  color: #555;
+  font-size: 16px;
+}
+
+/* Efeito de aumento e cor para o ícone */
+.editar:hover {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+.delete-icon:hover {
+  transform: scale(1.2);
+  color: #dc3545;
+}
+
+/* Personalizando o título do modal */
+.swal2-title {
+  font-size: 24px;
+  /* Tamanho da fonte do título */
+  font-weight: bold;
+  /* Deixa o título em negrito */
+  color: #333;
+  /* Cor do texto do título */
+}
+
+/* Personalizando o campo de entrada */
+.swal2-input {
+  padding: 5px;
+  font-size: 10px;
+  /* Tamanho do texto no input */
+  border: 2px solid #ddd;
+  /* Borda sutil ao redor do input */
+  border-radius: 20px;
+  /* Arredondando as bordas do input */
+}
+
+/* Personalizando os botões */
+.swal2-cancel {
+  background-color: rgb(21, 208, 214);
+  /* Define a cor de fundo como vermelho */
+  color: white;
+  /* Cor do texto em branco */
+  border: none;
+  /* Sem borda */
+  padding: 10px 20px;
+  /* Ajuste o padding conforme necessário */
+  cursor: pointer;
+  /* Muda o cursor para indicar que é clicável */
+  border-radius: 5px;
+  /* Bordas arredondadas para o botão */
+  transition: background-color 0.3s;
+  /* Efeito de transição ao passar o mouse */
+}
+
+.swal2-cancel:hover {
+  background-color: darkred;
+  /* Cor mais escura ao passar o mouse */
+}
+
+.swal2-confirm {
+  background-color: #3085d6;
+  /* Cor do botão de confirmação */
+  color: white;
+  /* Cor do texto do botão */
+  border: none;
+  /* Sem borda */
+  border-radius: 5px;
+  /* Borda arredondada */
+  padding: 10px 20px;
+  /* Espaçamento interno */
+  cursor: pointer;
+  /* Cursor de ponteiro ao passar o mouse */
+}
+
+/* Alterando o hover dos botões */
+.swal2-confirm:hover {
+  background-color: #007bff;
+  /* Cor ao passar o mouse no botão confirmar */
+}
+
+.swal2-cancel:hover {
+  background-color: #c82333;
+  /* Cor ao passar o mouse no botão cancelar */
+}
+
+/* Personalizando o modal em si */
+.swal2-popup {
+  border-radius: 10px;
+  /* Deixando o modal com cantos arredondados */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  /* Sombra ao redor do modal */
+}
+
+.page-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+.page-control i {
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.page-control span {
+  font-size: 16px;
+}
+table{
+  width: 100%;
+ 
+}
+
+td,th{
+  padding: 8px;
+  border-bottom: 1px solid #007bff;
+  }
+}

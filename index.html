@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-toastification@2.0.0/dist/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue-toastification@2.0.0/dist/index.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script defer src="app.js"></script>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <!-- Componente atual que está sendo exibido -->
+        <transition name="fade" mode="out-in">
+            <component :is="currentComponent" @switch-view="switchView"></component>
+        </transition>
+
+        <!-- Faz com que o botão de voltar apareça em todas as telas -->
+        <button class="back-button" v-if="showBackButton" @click="goBack">
+            <img src="assets/anterior.png" alt="Voltar">
+        </button>
+    </div>
+</body>
+
+</html>

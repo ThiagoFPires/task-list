@@ -22,7 +22,7 @@ app.use(express.json()); // Parse de JSON no corpo da requisição
 app.use(router);
 
 // Porta da aplicação
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
