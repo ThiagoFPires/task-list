@@ -19,10 +19,8 @@ class AuthController {
         return res.status(400).json({ error: 'Email já cadastrado' });
       }
 
-      // Criptografando a senha com bcrypt
       const hashedPassword = await bcrypt.hash(senha, 10);
 
-      // Criando novo usuário no banco de dados
       const newUser = await prisma.usuario.create({
         data: {
           email,
@@ -30,14 +28,12 @@ class AuthController {
         },
       });
 
-      // Gerando o token JWT
       const token = jwt.sign(
         { id: newUser.id, email: newUser.email },
         process.env.JWT_SECRET,
         { expiresIn: '1h' }
       );
 
-      // Respondendo com sucesso e o token JWT
       return res.status(201).json({
         message: 'Usuário registrado com sucesso',
         user: newUser,
@@ -49,12 +45,11 @@ class AuthController {
     }
   }
 
-  // Login de usuário
   async login(req, res) {
     const { email, senha } = req.body;
 
     try {
-      // Verificando se o usuário existe
+      // verificação de existencia do usuário
       const user = await prisma.usuario.findUnique({
         where: { email },
       });
@@ -63,21 +58,23 @@ class AuthController {
         return res.status(401).json({ error: 'Credenciais inválidas' });
       }
 
-      // Comparando a senha fornecida com a senha criptografada
+      // comparativo de senhas
       const isPasswordValid = await bcrypt.compare(senha, user.senha);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Credenciais inválidas' });
       }
 
-      // Gerando o token JWT
       const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
         expiresIn: '1h',
       });
 
-      // Respondendo com sucesso e o token JWT
       return res.json({
         message: 'Login bem-sucedido',
         token,
+        user: {
+          id: user.id,
+          email: user.email,
+        },
       });
     } catch (error) {
       console.error(error);
