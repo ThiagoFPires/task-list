@@ -164,31 +164,31 @@ Vue.component('register-form', {
   }
 });
 
-// Instanciando a aplicação Vue
 new Vue({
-  el: '#app',
-  data() {
+    el: '#app',
+    data() {
       return {
-          currentComponent: 'login-form',
-          history: []
+        currentComponent: 'login-form',
+        history: []
       };
-  },
-  computed: {
+    },
+    computed: {
       showBackButton() {
-          return this.currentComponent !== 'login-form';
+        return this.currentComponent !== 'login-form';
       }
-  },
-  methods: {
+    },
+    methods: {
       switchView(component) {
-          if (this.currentComponent !== component) {
-              this.history.push(this.currentComponent);
-          }
-          this.currentComponent = component;
+        if (this.currentComponent !== component) {
+          this.history.push(this.currentComponent);
+        }
+        this.currentComponent = component;
       },
       goBack() {
-          if (this.history.length > 0) {
-              this.currentComponent = this.history.pop();
-          }
+        if (this.history.length > 0) {
+          this.currentComponent = this.history.pop();
+        }
       }
-  }
-});
+    }
+  });
+  
