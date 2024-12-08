@@ -2,15 +2,17 @@ Vue.component('task-list', {
   template: `
     <div class="task-list-container">
       <h2>Lista de Tarefas</h2>
-      <input 
-          type="text" 
-          v-model="consulta" 
-          placeholder="Buscar tarefa" 
-          class="search-input" 
-          @input="filterTasks"
-          id="input_buscar"
-      />
-      <i class="fas fa-search search-icon" @click="filterTasks"></i>
+      <div class="search-container">
+        <input 
+            type="text" 
+            v-model="consulta" 
+            placeholder="Buscar por título ou status" 
+            class="search-input" 
+            @input="filterTasks"
+            id="input_buscar"
+        />
+        <i class="fas fa-search search-icon" @click="filterTasks"></i>
+      </div>
       <button @click="$emit('switch-view', 'add-task-form')" class="add-button">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/>
@@ -36,11 +38,7 @@ Vue.component('task-list', {
   `,
   data() {
     return {
-      tasks: [
-        { id: 1, title: 'Tarefa 1', status: 'Em andamento' },
-        { id: 2, title: 'Tarefa 2', status: 'Concluída' },
-        { id: 3, title: 'Tarefa 3', status: 'Em andamento' },
-      ],
+      tasks: [],
       selectedStatus: 'Todos',
       consulta: ''
     };
@@ -52,7 +50,10 @@ Vue.component('task-list', {
         tasks = tasks.filter(task => task.status === this.selectedStatus);
       }
       if (this.consulta) {
-        tasks = tasks.filter(task => task.title.toLowerCase().includes(this.consulta.toLowerCase()));
+        tasks = tasks.filter(task => 
+          task.title.toLowerCase().includes(this.consulta.toLowerCase()) ||
+          task.status.toLowerCase().includes(this.consulta.toLowerCase())
+        );
       }
       return tasks;
     }
@@ -75,6 +76,7 @@ Vue.component('task-list', {
 
 
 
+
 Vue.component('add-task-form', {
   template: `
     <div class="add-task-form">
@@ -82,7 +84,27 @@ Vue.component('add-task-form', {
       <form @submit.prevent="addTask">
         <div class="text-box">
           <input type="text" v-model="title" placeholder="Título da Tarefa" required />
-          <input type="text" v-model="status" placeholder="Status da Tarefa" required />
+        </div>
+        <div class="text-box">
+          <textarea v-model="description" placeholder="Descrição da Tarefa" required></textarea>
+        </div>
+        <div class="select-box">
+          <label for="status">Status:</label>
+          <select id="status" v-model="status" required>
+            <option value="" disabled>Selecione o status</option>
+            <option value="pendente">Pendente</option>
+            <option value="em progresso">Em Progresso</option>
+            <option value="concluida">Concluída</option>
+          </select>
+        </div>
+        <div class="select-box">
+          <label for="priority">Prioridade:</label>
+          <select id="priority" v-model="priority" required>
+            <option value="" disabled>Selecione a prioridade</option>
+            <option value="baixa">Baixa</option>
+            <option value="media">Média</option>
+            <option value="alta">Alta</option>
+          </select>
         </div>
         <button :disabled="loading" type="submit" class="submit-button">Adicionar</button>
       </form>
@@ -91,21 +113,53 @@ Vue.component('add-task-form', {
   data() {
     return {
       title: '',
+      description: '',
       status: '',
+      priority: '',
       loading: false
     };
   },
   methods: {
     async addTask() {
-      this.loading = true;
-      // Simula a adição da tarefa
-      setTimeout(() => {
-        this.loading = false;
-        alert('Tarefa adicionada com sucesso!');
+      try {
+        this.loading = true;
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !user.id) {
+          throw new Error('Usuário não autenticado.');
+        }
+
+        const response = await axios.post('http://localhost:4000/tasks', {
+          titulo: this.title,
+          descricao: this.description,
+          status: this.status,
+          prioridade: this.priority,
+          usuarioId: user.id
+        });
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Tarefa adicionada com sucesso!',
+          text: `A tarefa "${this.title}" foi adicionada.`,
+          confirmButtonText: 'Ok'
+        });
+
         this.title = '';
+        this.description = '';
         this.status = '';
+        this.priority = '';
+
         this.$emit('switch-view', 'task-list');
-      }, 1000);
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao adicionar tarefa',
+          text: error.response?.data?.error || 'Ocorreu um erro. Tente novamente.',
+          confirmButtonText: 'Tente novamente'
+        });
+      } finally {
+        this.loading = false;
+      }
     }
   }
 });

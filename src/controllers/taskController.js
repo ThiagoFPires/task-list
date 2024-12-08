@@ -63,13 +63,13 @@ class TaskController {
         data: {
           titulo,
           descricao,
-          status: status || 'pendente',
-          prioridade: prioridade || 'baixa',
+          status,
+          prioridade,
           usuarioId,
         },
       });
 
-      res.json(novaTask);
+      res.status(201).json(novaTask);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Erro ao criar tarefa' });
