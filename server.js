@@ -6,28 +6,22 @@ const { PrismaClient } = require('@prisma/client');
 const router = require('./src/routes/routes');
 const app = express();
 
-// Carregar variáveis de ambiente
 dotenv.config();
 
-// Inicializar Prisma
 const prisma = new PrismaClient();
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.json()); // Parse de JSON no corpo da requisição
+app.use(express.json());
 
-// Suas rotas
 app.use(router);
 
-// Porta da aplicação
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
 
-// Rota padrão para teste
 app.get('/', (request, response) => {
   response.send('Servidor está funcionando!');
 });

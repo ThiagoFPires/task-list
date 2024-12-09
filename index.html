@@ -15,20 +15,16 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Este script foi movido para carregar os componentes do Vue.js -->
     <script defer src="./src/components/TaskList.js"></script>
     <script defer src="app.js"></script>
 </head>
 
 <body>
     <div id="app" class="container">
-        <!-- Componente atual que está sendo exibido -->
         <transition name="fade" mode="out-in">
             <component :is="currentComponent" @switch-view="switchView"></component>
         </transition>
 
-        <!-- Botão de Voltar, aparece em todas as telas quando necessário -->
         <button class="back-button" v-if="showBackButton" @click="goBack">
             <img src="assets/anterior.png" alt="Voltar">
         </button>

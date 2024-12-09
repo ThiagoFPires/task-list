@@ -39,7 +39,7 @@ body {
 
 .text-box {
   display: flex; 
-  flex-direction: column; /* Organiza os itens em coluna */
+  flex-direction: column;
   align-items: center;
   justify-content: center; 
   width: 50%;
@@ -51,7 +51,6 @@ body {
 input[type="text"],
 input[type="password"],
 .input-field {
-  /* caso tenha outra classe .input-field */
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
@@ -216,83 +215,55 @@ button:active {
     transform: scale(1.1);
   }
   
-
-/* Personalizando o título do modal */
 .swal2-title {
   font-size: 24px;
-  /* Tamanho da fonte do título */
   font-weight: bold;
-  /* Deixa o título em negrito */
   color: #333;
-  /* Cor do texto do título */
 }
 
-/* Personalizando o campo de entrada */
 .swal2-input {
   padding: 5px;
   font-size: 10px;
-  /* Tamanho do texto no input */
   border: 2px solid #ddd;
-  /* Borda sutil ao redor do input */
   border-radius: 20px;
-  /* Arredondando as bordas do input */
 }
 
-/* Personalizando os botões */
 .swal2-cancel {
   background-color: rgb(21, 208, 214);
-  /* Define a cor de fundo como vermelho */
   color: white;
-  /* Cor do texto em branco */
   border: none;
-  /* Sem borda */
   padding: 10px 20px;
-  /* Ajuste o padding conforme necessário */
   cursor: pointer;
-  /* Muda o cursor para indicar que é clicável */
   border-radius: 5px;
-  /* Bordas arredondadas para o botão */
   transition: background-color 0.3s;
-  /* Efeito de transição ao passar o mouse */
 }
 
 .swal2-cancel:hover {
   background-color: darkred;
-  /* Cor mais escura ao passar o mouse */
+
 }
 
 .swal2-confirm {
   background-color: #2f7920;
-  /* Cor do botão de confirmação */
   color: white;
-  /* Cor do texto do botão */
   border: none;
-  /* Sem borda */
   border-radius: 5px;
-  /* Borda arredondada */
   padding: 10px 20px;
-  /* Espaçamento interno */
   cursor: pointer;
-  /* Cursor de ponteiro ao passar o mouse */
 }
 
-/* Alterando o hover dos botões */
 .swal2-confirm:hover {
   background-color: #2f7920;
-  /* Cor ao passar o mouse no botão confirmar */
 }
 
 .swal2-cancel:hover {
   background-color: #c82333;
-  /* Cor ao passar o mouse no botão cancelar */
 }
 
-/* Personalizando o modal em si */
 .swal2-popup {
   border-radius: 10px;
-  /* Deixando o modal com cantos arredondados */
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-  /* Sombra ao redor do modal */
+
 }
 
 .page-control {
@@ -323,7 +294,6 @@ td,th{
 }
 
 
-/* Botões de ação */
 button {
   background-color: #ff7b10;
   color: #fff;
@@ -346,7 +316,6 @@ button:active {
   transform: scale(0.95);
 }
 
-/* Estilos da lista de tarefas */
 ul {
   list-style-type: none;
   padding: 0;
@@ -371,7 +340,6 @@ li button:hover {
   background-color: #dc3545;
 }
 
-/* Filtros de tarefa */
 .task-filters {
   margin-bottom: 20px;
 }
@@ -410,7 +378,7 @@ textarea, input, select {
 .submit-button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #ff7b10;
   color: #fff;
   font-size: 16px;
   border: none;
@@ -423,7 +391,6 @@ textarea, input, select {
 }
 
 
-/* Responsividade */
 @media (max-width: 768px) {
   .task-list-container, .add-task-form {
     padding: 20px;
@@ -439,7 +406,6 @@ textarea, input, select {
   }
 }
 
-/* Responsividade para telas menores */
 @media (max-width: 480px) {
   .task-list-container, .add-task-form {
     padding: 15px;
@@ -456,28 +422,27 @@ textarea, input, select {
   }
 }
 
-/* Estilo para o botão de adicionar tarefa */
 .add-button {
   background-color: #ff7b10;
   color: white;
   border: none;
-  padding: 6px; /* Reduzido para um botão mais compacto */
-  font-size: 12px; /* Fonte menor */
+  padding: 6px; 
+  font-size: 12px;
   cursor: pointer;
-  border-radius: 50%; /* Tornando o botão circular */
+  border-radius: 50%;
   transition: background-color 0.3s ease;
-  position: absolute; /* Para posicionar no canto */
-  bottom: 5px; /* Distância do fundo */
-  right: 5px; /* Distância da lateral direita */
-  width: 40px; /* Largura fixada para o botão */
-  height: 40px; /* Altura fixada para o botão */
+  position: absolute;
+  bottom: 5px;
+  right: 5px; 
+  width: 40px;
+  height: 40px; 
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.add-button i { /* Ajuste do ícone */
-  font-size: 20px; /* Ajuste do tamanho do ícone */
+.add-button i { 
+  font-size: 20px; 
 }
 
 .add-button:hover {
@@ -485,7 +450,6 @@ textarea, input, select {
 }
 
 
-/* Estilo para o botão de enviar no formulário */
 .submit-button {
   background-color: #ff7b10;
   color: white;
@@ -509,12 +473,12 @@ textarea, input, select {
 .search-container {
   display: flex;
   align-items: center;
-  gap: 10px; /* Espaço entre o campo de pesquisa e o ícone */
+  gap: 10px; 
 }
 
 .search-input {
   padding: 5px;
-  width: 200px; /* Ajuste conforme necessário */
+  width: 200px;
 }
 
 .search-icon {

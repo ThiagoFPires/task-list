@@ -5,12 +5,12 @@ const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 
 class AuthController {
-  // Registrar novo usuário
+  //registrar novo usuário
   async register(req, res) {
     const { email, senha } = req.body;
 
     try {
-      // Verifica se já existe um usuário com o email informado
+      //verifica se já existe um usuário com o email informado
       const userExists = await prisma.usuario.findUnique({
         where: { email },
       });
@@ -49,7 +49,7 @@ class AuthController {
     const { email, senha } = req.body;
 
     try {
-      // verificação de existencia do usuário
+      //verifica a existencia do usuário
       const user = await prisma.usuario.findUnique({
         where: { email },
       });
@@ -58,7 +58,7 @@ class AuthController {
         return res.status(401).json({ error: 'Credenciais inválidas' });
       }
 
-      // comparativo de senhas
+      //compara as senhas
       const isPasswordValid = await bcrypt.compare(senha, user.senha);
       if (!isPasswordValid) {
         return res.status(401).json({ error: 'Credenciais inválidas' });
@@ -82,11 +82,9 @@ class AuthController {
     }
   }
 
-  // Middleware de autenticação
   async authenticate(req, res, next) {
     const token = req.headers['authorization']?.split(' ')[1];
 
-    // Verificando se o token não foi fornecido
     if (!token) {
       console.log('Token não fornecido');
       return res.status(403).json({
@@ -97,17 +95,13 @@ class AuthController {
     }
 
     try {
-      // Decodificando o token JWT
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Armazenar informações do usuário para a próxima etapa
       req.userId = decoded.id;
-      console.log('Token válido:', decoded); // Log para depuração
+      console.log('Token válido:', decoded);
 
-      // Permitir o próximo middleware ou ação
       next();
     } catch (error) {
-      // Se o token for inválido ou expirado
       console.log('Erro ao verificar o token:', error.message);
       return res.status(401).json({
         success: false,
